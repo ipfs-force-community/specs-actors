@@ -23,7 +23,6 @@ import (
 	cid "github.com/ipfs/go-cid"
 	cbg "github.com/whyrusleeping/cbor-gen"
 	"golang.org/x/xerrors"
-	"math"
 
 	"github.com/filecoin-project/specs-actors/v8/actors/builtin"
 	"github.com/filecoin-project/specs-actors/v8/actors/builtin/market"
@@ -80,7 +79,7 @@ func (a Actor) Exports() []interface{} {
 		25:                        a.PreCommitSectorBatch,
 		26:                        a.ProveCommitAggregate,
 		27:                        a.ProveReplicaUpdates,
-		28:                        a.ChangeBeneficiaryInfo,
+		28:                        a.ChangeBeneficiary,
 	}
 }
 
@@ -3130,8 +3129,8 @@ func checkNewBeneficialParam(rt Runtime, params *ChangeBeneficiaryParams) {
 	}
 }
 
-// ChangeBeneficiaryInfo proposal/approve beneficiary change
-func (a Actor) ChangeBeneficiaryInfo(rt Runtime, params *ChangeBeneficiaryParams) *abi.EmptyValue {
+// ChangeBeneficiary proposal/approve beneficiary change
+func (a Actor) ChangeBeneficiary(rt Runtime, params *ChangeBeneficiaryParams) *abi.EmptyValue {
 	newBeneficiary, err := builtin.ResolveToIDAddr(rt, params.NewBeneficiary)
 	builtin.RequireNoErr(rt, err, exitcode.ErrIllegalState, "failed to resolve address %v", params.NewBeneficiary)
 
