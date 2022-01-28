@@ -2027,6 +2027,9 @@ func (a Actor) WithdrawBalance(rt Runtime, params *WithdrawBalanceParams) *abi.T
 			amountWithdrawn = big.Min(big.Min(availableBalance, params.AmountRequested), info.BeneficiaryInfo.Available())
 		}
 
+		if info.Beneficiary != info.Owner {
+			info.BeneficiaryInfo.UsedQuota = big.Add(info.BeneficiaryInfo.UsedQuota, amountWithdrawn)
+		}
 		err = st.SaveInfo(adt.AsStore(rt), info)
 		builtin.RequireNoErr(rt, err, exitcode.ErrIllegalState, "could not save miner info")
 	})
@@ -2038,9 +2041,6 @@ func (a Actor) WithdrawBalance(rt Runtime, params *WithdrawBalanceParams) *abi.T
 		code := rt.Send(info.Beneficiary, builtin.MethodSend, nil, amountWithdrawn, &builtin.Discard{})
 		builtin.RequireSuccess(rt, code, "failed to withdraw balance")
 
-		if info.Beneficiary != info.Owner {
-			info.BeneficiaryInfo.UsedQuota = big.Add(info.BeneficiaryInfo.UsedQuota, amountWithdrawn)
-		}
 	}
 
 	burnFunds(rt, feeToBurn, BurnMethodWithdrawBalance)
