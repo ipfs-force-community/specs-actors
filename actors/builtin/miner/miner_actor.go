@@ -2464,13 +2464,13 @@ func (a Actor) ChangeBeneficiary(rt Runtime, params *ChangeBeneficiaryParams) *a
 	return nil
 }
 
-type BeneficiaryInfo struct {
+type ActiveBeneficiary struct {
 	Beneficiary addr.Address
 	BeneficiaryTerm
 }
 
 type GetBeneficiaryReturn struct {
-	Active   BeneficiaryInfo
+	Active   ActiveBeneficiary
 	Proposed *PendingBeneficiaryChange
 }
 
@@ -2483,7 +2483,7 @@ func (a Actor) GetBeneficiary(rt Runtime, _ *abi.EmptyValue) *GetBeneficiaryRetu
 	rt.StateReadonly(&st)
 	info := getMinerInfo(rt, &st)
 	return &GetBeneficiaryReturn{
-		Active: BeneficiaryInfo{
+		Active: ActiveBeneficiary{
 			Beneficiary:     info.Beneficiary,
 			BeneficiaryTerm: info.BeneficiaryTerm,
 		},
