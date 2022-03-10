@@ -4,6 +4,8 @@ import (
 	"bytes"
 	"encoding/binary"
 	"fmt"
+	"github.com/filecoin-project/go-bitfield"
+	"github.com/filecoin-project/go-state-types/exitcode"
 	"math"
 
 	addr "github.com/filecoin-project/go-address"
@@ -12,7 +14,6 @@ import (
 	"github.com/filecoin-project/go-state-types/cbor"
 	"github.com/filecoin-project/go-state-types/crypto"
 	"github.com/filecoin-project/go-state-types/dline"
-	"github.com/filecoin-project/go-state-types/exitcode"
 	rtt "github.com/filecoin-project/go-state-types/rt"
 	miner0 "github.com/filecoin-project/specs-actors/actors/builtin/miner"
 	miner2 "github.com/filecoin-project/specs-actors/v2/actors/builtin/miner"
