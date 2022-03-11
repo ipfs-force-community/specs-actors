@@ -79,6 +79,7 @@ func (a Actor) Exports() []interface{} {
 		26:                        a.ProveCommitAggregate,
 		27:                        a.ProveReplicaUpdates,
 		28:                        a.ChangeBeneficiary,
+		29:                        a.GetBeneficiary,
 	}
 }
 
